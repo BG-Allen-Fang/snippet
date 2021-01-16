@@ -18,7 +18,7 @@ type application struct {
 }
 
 func main() {
-	dsn := flag.String("dsn", "postgres://web:6611@localhost:5432/snippetbox", "PostgreSQL data source name")
+	dsn := flag.String("dsn", "postgres://postgres:6611@localhost:5432/snippetbox", "PostgreSQL data source name")
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	flag.Parse()
 
