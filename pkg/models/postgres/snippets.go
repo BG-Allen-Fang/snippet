@@ -31,7 +31,6 @@ func (m *SnippetModel) Insert(title, content, expires string) (int, error) {
 
 	return int(id), nil
 }
-
 func (m *SnippetModel) Get(id int) (*models.Snippet, error) {
 	stmt := "SELECT id, title, content, created, expires FROM snippets WHERE expires > CLOCK_TIMESTAMP() AND id = $1"
 	s := &models.Snippet{}
@@ -46,7 +45,6 @@ func (m *SnippetModel) Get(id int) (*models.Snippet, error) {
 	}
 	return s, nil
 }
-
 func (m *SnippetModel) Latest() ([]*models.Snippet, error) {
 	stmt := "SELECT id, title, content, created, expires FROM snippets WHERE expires > CLOCK_TIMESTAMP() ORDER BY created DESC LIMIT 10"
 
