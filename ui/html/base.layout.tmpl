@@ -3,18 +3,22 @@
     <html lang='en'>
     <head>
         <meta charset='utf-8'>
-        <title>{{template "title" .}} - Snippetbox</title>
+        <title>{{template "title" .}} - Filmer</title>
         <link rel='stylesheet' href='/static/css/main.css'>
-        <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
+        <link rel='shortcut icon' href='https://static10.tgstat.ru/channels/_0/82/825305e2d50434dae30ed7c03d12898e.jpg' type='image/x-icon'>
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700'>
     </head>
     <body>
     <header>
-        <h1><a href='/'>Snippetbox</a></h1>
+        <h1><a href='/'>Filmer</a></h1>
     </header>
     <nav>
         <a href='/'>Home</a>
-        <a href='/snippet/create'>Create snippet</a>
+        <a href='/film/create'>Create Film</a>
+        <a href='/sign'>Sign in</a>
+        <a href='/login'>Login</a>
+        <a href='/logout'>Log out</a>
+        <a href='/profile'>Profile</a>
     </nav>
     <main>
         {{with .Flash}}

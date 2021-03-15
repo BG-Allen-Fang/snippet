@@ -7,10 +7,25 @@ import (
 
 var ErrNoRecord = errors.New("models: no matching record found")
 
-type Snippet struct {
-	ID      int
-	Title   string
-	Content string
-	Created time.Time
-	Expires time.Time
+type Films struct {
+	ID          int
+	Name        string
+	Description string
+	Time        time.Time
+	Count       int
+}
+
+type Ticket struct {
+	ID    int
+	U_id  int
+	Name  string
+	Time  string
+	Price int
+}
+
+type Kino_user struct {
+	ID     int
+	Login  string
+	Pass   string
+	Balans int
 }

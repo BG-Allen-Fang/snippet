@@ -4,14 +4,18 @@
     {{with .Snippet}}
         <div class='snippet'>
             <div class='metadata'>
-                <strong>{{.Title}}</strong>
+                <strong>{{.Name}}</strong>
                 <span>#{{.ID}}</span>
             </div>
-            <pre><code>{{.Content}}</code></pre>
+            <pre><code>{{.Description}}</code></pre>
             <div class='metadata'>
-                <time>Created: {{humanDate .Created}}</time>
-                <time>Expires: {{humanDate .Expires}}</time>
+                <time>Time holding : {{humanDate .Time}}</time>
             </div>
+            <form action='/film/{{.ID}}' method='POST'>
+                <div>
+                    <input type='submit' value='Buy ticket'>
+                </div>
+            </form>
         </div>
     {{end}}
 {{end}}

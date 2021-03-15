@@ -1,19 +1,19 @@
 {{template "base" .}}
 {{define "title"}}Home{{end}}
 {{define "main"}}
-    <h2>Latest Snippets</h2>
+    <h2>Latest Films</h2>
     {{if .Snippets}}
         <table>
             <tr>
-                <th>Title</th>
-                <th>Created</th>
-                <th>ID</th>
+                <th>Name</th>
+                <th>Time</th>
+                <th>Count of tickets</th>
             </tr>
             {{range .Snippets}}
                 <tr>
-                    <td><a href='/snippet/{{.ID}}'>{{.Title}}</a></td>
-                    <td>{{humanDate .Created}}</td>
-                    <td>#{{.ID}}</td>
+                    <td><a href='/film/{{.ID}}'>{{.Name}}</a></td>
+                    <td>{{humanDate .Time}}</td>
+                    <td>{{.Count}}</td>
                 </tr>
             {{end}}
         </table>

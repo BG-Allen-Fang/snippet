@@ -23,8 +23,8 @@ type application struct {
 }
 
 func main() {
-	dsn := flag.String("dsn", "postgres://postgres:6611@localhost:5432/snippetbox", "PostgreSQL data source name")
-	addr := flag.String("addr", ":4000", "HTTP network address")
+	dsn := flag.String("dsn", "postgres://postgres:147urqafjmvz@localhost:5432/Films", "PostgreSQL data source name")
+	addr := flag.String("addr", ":4001", "HTTP network address")
 	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret key")
 	flag.Parse()
 

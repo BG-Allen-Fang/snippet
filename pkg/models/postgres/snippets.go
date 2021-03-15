@@ -14,27 +14,30 @@ type SnippetModel struct {
 	DB *pgxpool.Pool
 }
 
-func (m *SnippetModel) Insert(title, content, expires string) (int, error) {
-	stmt := "INSERT INTO snippets (title, content, created, expires)" + "VALUES($1, $2, $3, $4) RETURNING id"
-	date, err := strconv.Atoi(expires)
+func (m *SnippetModel) Insert(name, description, expired string) (int, error) {
+	stmt := "insert into Film (name,description,time,count) VALUES ($1, $2, $3, $4) RETURNING id"
+	intExpires, err := strconv.Atoi(expired)
 
 	if err != nil {
 		return 0, err
 	}
+	var lastIndex int
 
-	var id int
-	result := m.DB.QueryRow(context.Background(), stmt, title, content, time.Now(), time.Now().AddDate(0, 0, date)).Scan(&id)
-
-	if result != nil {
+	err = m.DB.QueryRow(context.Background(), stmt, name, description, time.Now().AddDate(0, 0, intExpires), 10).Scan(&lastIndex)
+	if err != nil {
 		return 0, err
 	}
-
-	return int(id), nil
+	return int(lastIndex), nil
 }
-func (m *SnippetModel) Get(id int) (*models.Snippet, error) {
-	stmt := "SELECT id, title, content, created, expires FROM snippets WHERE expires > CLOCK_TIMESTAMP() AND id = $1"
-	s := &models.Snippet{}
-	err := m.DB.QueryRow(context.Background(), stmt, id).Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+
+func (m *SnippetModel) Get(id int) (*models.Films, error) {
+	stmt := "Select id, name, description, time, count FROM Film WHERE id = $1"
+
+	row := m.DB.QueryRow(context.Background(), stmt, id)
+
+	s := &models.Films{}
+
+	err := row.Scan(&s.ID, &s.Name, &s.Description, &s.Time, &s.Count)
 
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -45,8 +48,9 @@ func (m *SnippetModel) Get(id int) (*models.Snippet, error) {
 	}
 	return s, nil
 }
-func (m *SnippetModel) Latest() ([]*models.Snippet, error) {
-	stmt := "SELECT id, title, content, created, expires FROM snippets WHERE expires > CLOCK_TIMESTAMP() ORDER BY created DESC LIMIT 10"
+
+func (m *SnippetModel) Latest() ([]*models.Films, error) {
+	stmt := "Select id, name, description, time, count FROM Film WHERE time > CLOCK_TIMESTAMP() and count > 0 ORDER BY time DESC"
 
 	rows, err := m.DB.Query(context.Background(), stmt)
 	if err != nil {
@@ -54,12 +58,12 @@ func (m *SnippetModel) Latest() ([]*models.Snippet, error) {
 	}
 	defer rows.Close()
 
-	snippets := []*models.Snippet{}
+	snippets := []*models.Films{}
 
 	for rows.Next() {
-		s := &models.Snippet{}
+		s := &models.Films{}
 
-		err = rows.Scan(&s.ID, &s.Title, &s.Content, &s.Created, &s.Expires)
+		err = rows.Scan(&s.ID, &s.Name, &s.Description, &s.Time, &s.Count)
 		if err != nil {
 			return nil, err
 		}
@@ -70,6 +74,32 @@ func (m *SnippetModel) Latest() ([]*models.Snippet, error) {
 	if err = rows.Err(); err != nil {
 		return nil, err
 	}
-
 	return snippets, nil
+}
+
+func (m *SnippetModel) Update(id int) string {
+
+	check, err := m.Get(id)
+
+	if err != nil {
+		return "No films"
+	} else {
+		if check.Count != 0 {
+			stmt := "Update Film set count = $1 where id = $2 RETURNING id"
+
+			row := m.DB.QueryRow(context.Background(), stmt, check.Count-1, id)
+
+			var id int
+
+			err = row.Scan(&id)
+
+			if err == nil {
+				return "You successfully bought ticket"
+			} else {
+				return "Interval server error"
+			}
+		} else {
+			return "No tickets"
+		}
+	}
 }

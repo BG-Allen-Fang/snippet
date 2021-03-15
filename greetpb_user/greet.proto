@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package greet;
+
+option go_package="greet\\greetpb;greetpb";
+
+message Greeting {
+  int64 id = 1;
+  string login = 2;
+  string password = 4;
+  string balans = 5;
+}
+
+message GreetRequest {
+  Greeting greeting = 1;
+}
+
+message GreetResponse {
+  int64 result = 1;
+}
+
+message GreetRequestGet {
+  Greeting greeting = 1;
+}
+
+message GreetResponseGet {
+  Greeting greeting = 1;
+}
+
+message GreetRequestCheck {
+  Greeting greeting = 1;
+}
+
+message GreetResponseCheck {
+  int64 result = 1;
+}
+
+message GreetLogout{}
+
+message GreetLogOutResponse{
+  int64 result = 1;
+}
+
+service GreetService{
+
+  rpc Greet(GreetRequest) returns (GreetResponse) {};
+
+  rpc GetGreet(GreetRequestGet) returns (GreetResponseGet) {};
+
+  rpc GreetCheck(GreetRequestCheck) returns (GreetResponseCheck) {};
+
+  rpc GreetLogOut(GreetLogout) returns (GreetLogOutResponse) {};
+}

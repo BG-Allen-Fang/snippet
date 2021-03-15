@@ -12,8 +12,10 @@ type templateData struct {
 	CurrentYear int
 	Flash       string
 	Form        *forms.Form
-	Snippet     *models.Snippet
-	Snippets    []*models.Snippet
+	Snippet     *models.Films
+	Snippets    []*models.Films
+	Kino_user   *models.Kino_user
+	Ticket      []*models.Ticket
 }
 
 func humanDate(t time.Time) string {

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package greet;
+
+option go_package="greet\\greetpb;greetpb";
+
+message Greeting {
+  int64 id = 1;
+  string name = 2;
+  int64 u_id = 3;
+  string time = 4;
+  int64 price = 5;
+}
+
+message GreetRequestInsert {
+  Greeting greeting = 1;
+}
+
+message GreetResponseInsert {
+  int64 result = 1;
+  string err = 2;
+}
+
+message GreetRequestLatest {
+  int64 result = 1;
+}
+
+message GreetResponseLatest {
+  Greeting greeting = 1;
+}
+
+service GreetService{
+
+  rpc InsertGreet(GreetRequestInsert) returns (GreetResponseInsert) {};
+
+  rpc LatestGreet(GreetRequestLatest) returns (stream GreetResponseLatest) {};
+
+}
