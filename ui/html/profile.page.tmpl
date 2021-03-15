@@ -1,0 +1,30 @@
+{{template "base" .}}
+{{define "title"}}Kino_user #{{.Kino_user.ID}}{{end}}
+{{define "main"}}
+    {{with .Kino_user}}
+        <div class='snippet'>
+            <div class='metadata'>
+                <strong>{{.Login}}</strong>
+            </div>
+        </div>
+    {{end}}
+    <h2>My tickets</h2>
+    {{if .Ticket}}
+        <table>
+            <tr>
+                <th>Name of film</th>
+                <th>Time of film</th>
+                <th>ID of ticket</th>
+            </tr>
+            {{range .Ticket}}
+                <tr>
+                    <td>{{.Name}}</a></td>
+                    <td>{{.Time}}</td>
+                    <td>{{.ID}}</td>
+                </tr>
+            {{end}}
+        </table>
+    {{else}}
+        <p>There's nothing to see here... buy tickets<3!</p>
+    {{end}}
+{{end}}

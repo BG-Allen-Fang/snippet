@@ -1,0 +1,25 @@
+{{template "base" .}}
+{{define "title"}}Create a New Snippet{{end}}
+{{define "main"}}
+    <form action='/sign' method='POST'>
+        {{with .Form}}
+            <div>
+                <label>Login:</label>
+                {{with .Errors.Get "Login"}}
+                    <label class='error'>{{.}}</label>
+                {{end}}
+                <input type='text' name='Login' value='{{.Get "Login"}}'>
+            </div>
+            <div>
+                <label>Pass:</label>
+                {{with .Errors.Get "Pass"}}
+                    <label class='error'>{{.}}</label>
+                {{end}}
+                <input type='text' name='Pass' value='{{.Get "Pass"}}'>
+            </div>
+            <div>
+                <input type='submit' value='SIGN IN'>
+            </div>
+        {{end}}
+    </form>
+{{end}}
